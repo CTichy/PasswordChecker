@@ -14,7 +14,7 @@ def validate_password(password, min_len):
     # compiling regex to create regex object
     pattern = re.compile(
         r"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\u0020-\u002F\u003A-\u0040\u005B-\u0060\u007B-\u007E])[A-Za-z\d\u0020-\u002F\u003A-\u0040\u005B-\u0060\u007B-\u007E]{" + str(
-            min_len) + ",}$")
+            min_len) + ",200}$")
     return re.search(pattern, password)
 
 
@@ -120,7 +120,7 @@ class MyGUI:
                 vml = abs(int(f"{self.minimum_length.get()}"))
             except ValueError:
                 self.answer.config(
-                    text='A rare case of logic. It should not arise.')
+                    text='A rare case of logic. It should not arise. :o ')
                 return
         else:
             self.answer.config(
@@ -130,6 +130,11 @@ class MyGUI:
         if not self.check_pawned_state.get() and not self.check_complexity_state.get():
             self.answer.config(
                 text='Nothing to check!!')
+            return
+
+        if len(self.password_entry.get()) < vml:
+            self.answer.config(
+                text='The password provided is shorter than the Minimum Length!!')
             return
 
         if self.password_entry.get() == self.password_confirm.get():
